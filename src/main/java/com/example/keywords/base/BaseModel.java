@@ -69,7 +69,7 @@ public class BaseModel {
         } catch (IOException e) {
             e.printStackTrace();
             return null;
-        }finally {
+        } finally {
         }
     }
 

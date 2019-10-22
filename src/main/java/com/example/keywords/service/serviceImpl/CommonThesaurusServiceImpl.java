@@ -1,5 +1,6 @@
 package com.example.keywords.service.serviceImpl;
 
+import com.example.keywords.config.APIConfig;
 import com.example.keywords.dao.CommonThesaurusMapper;
 import com.example.keywords.model.CommonThesaurus;
 import com.example.keywords.model.KeyWords;
@@ -24,7 +25,9 @@ import java.util.Map;
  */
 @Service
 public class CommonThesaurusServiceImpl implements CommonThesaurusService {
-   static final BaseModel baseModel = new BaseModel();
+
+    static final BaseModel baseModel = new BaseModel();
+
     @Autowired
     CommonThesaurusMapper commonThesaurusMapper;
 
@@ -33,23 +36,34 @@ public class CommonThesaurusServiceImpl implements CommonThesaurusService {
         return commonThesaurusMapper.selectByPrimaryKey(id);
     }
 
-    static  public List<String> getKeywords(String txt){
+    @Override
+    public KeyWords getKeywords(String txt){
         Map<String, String> map = new HashMap<>();
-        map.put("txt",txt);
-        String result  =  baseModel.getWithParamtersWithoutToken("/getKeyWord",map);
+        map.put("txt", txt);
+        String result = baseModel.postWithoutToken(APIConfig.GET_KEYWORD, map);
         Gson gson = new Gson();
-        KeyWords keyWords = gson.fromJson(result,  KeyWords.class);
-        return keyWords.getKeyWords();
+        KeyWords keyWords = gson.fromJson(result, KeyWords.class);
+        return keyWords;
     }
-    static  public Synonyms getSynonyms(KeyWords keyWords,String url){
+
+    @Override
+    public Synonyms getSynonyms(KeyWords keyWords, String url) {
         Map<String,String> map = new HashMap<>();
         Gson gson = new Gson();
+
+        String str = new String();
+        for (int i = 0; i < keyWords.getKeyWords().size(); i++ ) {
+            if(i != keyWords.getKeyWords().size() - 1)
+                str += keyWords.getKeyWords().get(i) + ",";
+            else
+                str += keyWords.getKeyWords().get(i);
+        }
+        map.put("keyWords", str);
+
         map.put("keyWords",gson.toJson(keyWords.getKeyWords()));
-        String result = baseModel.getWithParamtersWithoutToken("/getSynonyms",map);
-        Synonyms synonyms = gson.fromJson(result,Synonyms.class);
+        String result = baseModel.getWithParamtersWithoutToken(APIConfig.GET_SYNONYMS, map);
+        Synonyms synonyms = gson.fromJson(result, Synonyms.class);
         return synonyms;
-
-
     }
 
-    }
+}
