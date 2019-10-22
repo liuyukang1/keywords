@@ -1,0 +1,253 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.keywords.dao.CommonThesaurusMapper">
+  <resultMap id="BaseResultMap" type="com.example.keywords.model.CommonThesaurus">
+    <id column="ID" jdbcType="INTEGER" property="id" />
+    <result column="common_words" jdbcType="VARCHAR" property="commonWords" />
+    <result column="weight" jdbcType="DOUBLE" property="weight" />
+    <result column="handle_weight" jdbcType="DOUBLE" property="handleWeight" />
+    <result column="document_id" jdbcType="INTEGER" property="documentId" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+    <result column="is_delete" jdbcType="TINYINT" property="isDelete" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    ID, common_words, weight, handle_weight, document_id, create_time, update_time, is_delete
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from common_thesaurus
+    where ID = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from common_thesaurus
+    where ID = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.example.keywords.model.CommonThesaurus">
+    insert into common_thesaurus (ID, common_words, weight, 
+      handle_weight, document_id, create_time, 
+      update_time, is_delete)
+    values (#{id,jdbcType=INTEGER}, #{commonWords,jdbcType=VARCHAR}, #{weight,jdbcType=DOUBLE}, 
+      #{handleWeight,jdbcType=DOUBLE}, #{documentId,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP}, 
+      #{updateTime,jdbcType=TIMESTAMP}, #{isDelete,jdbcType=TINYINT})
+  </insert>
+  <insert id="insertSelective" parameterType="com.example.keywords.model.CommonThesaurus">
+    insert into common_thesaurus
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        ID,
+      </if>
+      <if test="commonWords != null">
+        common_words,
+      </if>
+      <if test="weight != null">
+        weight,
+      </if>
+      <if test="handleWeight != null">
+        handle_weight,
+      </if>
+      <if test="documentId != null">
+        document_id,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="updateTime != null">
+        update_time,
+      </if>
+      <if test="isDelete != null">
+        is_delete,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="commonWords != null">
+        #{commonWords,jdbcType=VARCHAR},
+      </if>
+      <if test="weight != null">
+        #{weight,jdbcType=DOUBLE},
+      </if>
+      <if test="handleWeight != null">
+        #{handleWeight,jdbcType=DOUBLE},
+      </if>
+      <if test="documentId != null">
+        #{documentId,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="isDelete != null">
+        #{isDelete,jdbcType=TINYINT},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.example.keywords.model.CommonThesaurus">
+    update common_thesaurus
+    <set>
+      <if test="commonWords != null">
+        common_words = #{commonWords,jdbcType=VARCHAR},
+      </if>
+      <if test="weight != null">
+        weight = #{weight,jdbcType=DOUBLE},
+      </if>
+      <if test="handleWeight != null">
+        handle_weight = #{handleWeight,jdbcType=DOUBLE},
+      </if>
+      <if test="documentId != null">
+        document_id = #{documentId,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="isDelete != null">
+        is_delete = #{isDelete,jdbcType=TINYINT},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.example.keywords.model.CommonThesaurus">
+    update common_thesaurus
+    set common_words = #{commonWords,jdbcType=VARCHAR},
+      weight = #{weight,jdbcType=DOUBLE},
+      handle_weight = #{handleWeight,jdbcType=DOUBLE},
+      document_id = #{documentId,jdbcType=INTEGER},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
+      is_delete = #{isDelete,jdbcType=TINYINT}
+    where ID = #{id,jdbcType=INTEGER}
+  </update>
+  <resultMap id="BaseResultMap" type="com.example.keywords.model.CommonThesaurus">
+    <id column="ID" jdbcType="INTEGER" property="id" />
+    <result column="common_words" jdbcType="VARCHAR" property="commonWords" />
+    <result column="weight" jdbcType="DOUBLE" property="weight" />
+    <result column="handle_weight" jdbcType="DOUBLE" property="handleWeight" />
+    <result column="document_id" jdbcType="INTEGER" property="documentId" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+    <result column="is_delete" jdbcType="TINYINT" property="isDelete" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    ID, common_words, weight, handle_weight, document_id, create_time, update_time, is_delete
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from common_thesaurus
+    where ID = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from common_thesaurus
+    where ID = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.example.keywords.model.CommonThesaurus">
+    insert into common_thesaurus (ID, common_words, weight, 
+      handle_weight, document_id, create_time, 
+      update_time, is_delete)
+    values (#{id,jdbcType=INTEGER}, #{commonWords,jdbcType=VARCHAR}, #{weight,jdbcType=DOUBLE}, 
+      #{handleWeight,jdbcType=DOUBLE}, #{documentId,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP}, 
+      #{updateTime,jdbcType=TIMESTAMP}, #{isDelete,jdbcType=TINYINT})
+  </insert>
+  <insert id="insertSelective" parameterType="com.example.keywords.model.CommonThesaurus">
+    insert into common_thesaurus
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        ID,
+      </if>
+      <if test="commonWords != null">
+        common_words,
+      </if>
+      <if test="weight != null">
+        weight,
+      </if>
+      <if test="handleWeight != null">
+        handle_weight,
+      </if>
+      <if test="documentId != null">
+        document_id,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="updateTime != null">
+        update_time,
+      </if>
+      <if test="isDelete != null">
+        is_delete,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="commonWords != null">
+        #{commonWords,jdbcType=VARCHAR},
+      </if>
+      <if test="weight != null">
+        #{weight,jdbcType=DOUBLE},
+      </if>
+      <if test="handleWeight != null">
+        #{handleWeight,jdbcType=DOUBLE},
+      </if>
+      <if test="documentId != null">
+        #{documentId,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="isDelete != null">
+        #{isDelete,jdbcType=TINYINT},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.example.keywords.model.CommonThesaurus">
+    update common_thesaurus
+    <set>
+      <if test="commonWords != null">
+        common_words = #{commonWords,jdbcType=VARCHAR},
+      </if>
+      <if test="weight != null">
+        weight = #{weight,jdbcType=DOUBLE},
+      </if>
+      <if test="handleWeight != null">
+        handle_weight = #{handleWeight,jdbcType=DOUBLE},
+      </if>
+      <if test="documentId != null">
+        document_id = #{documentId,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="isDelete != null">
+        is_delete = #{isDelete,jdbcType=TINYINT},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.example.keywords.model.CommonThesaurus">
+    update common_thesaurus
+    set common_words = #{commonWords,jdbcType=VARCHAR},
+      weight = #{weight,jdbcType=DOUBLE},
+      handle_weight = #{handleWeight,jdbcType=DOUBLE},
+      document_id = #{documentId,jdbcType=INTEGER},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
+      is_delete = #{isDelete,jdbcType=TINYINT}
+    where ID = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>
