@@ -16,7 +16,7 @@ public class BaseModel {
      * get不带token带parameter获得数据
      * @param url
      */
-    protected String getWithParamtersWithoutToken(String url, Map<String, String> params) {
+    public String getWithParamtersWithoutToken(String url, Map<String, String> params) {
 
         //1 构造Request
         HttpUrl.Builder httpBuider = HttpUrl.parse(Config.BaseUrl + url).newBuilder();
@@ -48,7 +48,7 @@ public class BaseModel {
      * @param url
      * @param bodyParams
      */
-    protected String postWithoutToken(String url, Map<String, String> bodyParams) {
+    public String postWithoutToken(String url, Map<String, String> bodyParams) {
         // 构造RequestBody
         RequestBody body = setRequestBody(bodyParams);
 
