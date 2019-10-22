@@ -34,10 +34,11 @@ public class CommonThesaurusServiceImpl implements CommonThesaurusService {
     }
 
     static  public List<String> getKeywords(String txt){
+        Gson gson = new Gson();
         Map<String, String> map = new HashMap<>();
         map.put("txt",txt);
         String result  =  baseModel.getWithParamtersWithoutToken("/getKeyWord",map);
-        Gson gson = new Gson();
+
         KeyWords keyWords = gson.fromJson(result,  KeyWords.class);
         return keyWords.getKeyWords();
     }
