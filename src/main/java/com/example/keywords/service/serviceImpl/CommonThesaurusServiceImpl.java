@@ -36,7 +36,7 @@ public class CommonThesaurusServiceImpl implements CommonThesaurusService {
     static  public List<String> getKeywords(String txt){
         Map<String, String> map = new HashMap<>();
         map.put("txt",txt);
-        String result  =  baseModel.getWithParamtersWithoutToken("getKeyWord",map);
+        String result  =  baseModel.getWithParamtersWithoutToken("/getKeyWord",map);
         Gson gson = new Gson();
         KeyWords keyWords = gson.fromJson(result,  KeyWords.class);
         return keyWords.getKeyWords();
@@ -45,7 +45,7 @@ public class CommonThesaurusServiceImpl implements CommonThesaurusService {
         Map<String,String> map = new HashMap<>();
         Gson gson = new Gson();
         map.put("keyWords",gson.toJson(keyWords.getKeyWords()));
-        String result = baseModel.getWithParamtersWithoutToken("getSynonyms",map);
+        String result = baseModel.getWithParamtersWithoutToken("/getSynonyms",map);
         Synonyms synonyms = gson.fromJson(result,Synonyms.class);
         return synonyms;
 
