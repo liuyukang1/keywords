@@ -1,9 +1,7 @@
 package com.example.keywords.dao;
 
 import com.example.keywords.model.CommonThesaurus;
-import org.springframework.stereotype.Repository;
 
-@Repository
 public interface CommonThesaurusMapper {
     int deleteByPrimaryKey(Integer id);
 
