@@ -2,6 +2,8 @@ package com.example.keywords.dao;
 
 import com.example.keywords.model.DocumentInformation;
 
+import java.util.List;
+
 public interface DocumentInformationMapper {
     int deleteByPrimaryKey(Integer id);
 
