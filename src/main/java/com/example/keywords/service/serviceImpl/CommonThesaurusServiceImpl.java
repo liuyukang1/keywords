@@ -37,6 +37,11 @@ public class CommonThesaurusServiceImpl implements CommonThesaurusService {
 
 
     @Override
+    public CommonThesaurus selectByPrimaryKey(Integer id) {
+        return null;
+    }
+
+    @Override
     public KeyWords getKeywords(String txt){
         Map<String, String> map = new HashMap<>();
         try{
@@ -55,23 +60,9 @@ public class CommonThesaurusServiceImpl implements CommonThesaurusService {
 
     @Override
     public Synonyms getSynonyms(KeyWords keyWords, String url) {
-        Map<String,String> map = new HashMap<>();
-        Gson gson = new Gson();
-
-        String str = new String();
-        for (int i = 0; i < keyWords.getKeyWords().size(); i++ ) {
-            if(i != keyWords.getKeyWords().size() - 1)
-                str += keyWords.getKeyWords().get(i) + ",";
-            else
-                str += keyWords.getKeyWords().get(i);
-        }
-//        map.put("keyWords", str);
-
-        map.put("keyWords",gson.toJson(keyWords.getKeyWords()));
-        String result = baseModel.getWithParamtersWithoutToken(APIConfig.GET_SYNONYMS, map);
-        Synonyms synonyms = gson.fromJson(result, Synonyms.class);
-        return synonyms;
+        return null;
     }
+
 
     public List<String> getWords(String txt){
         Map<String,String> map = new HashMap<>();

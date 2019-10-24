@@ -34,6 +34,12 @@ public class First {
         return commonThesaurusService.selectByPrimaryKey(1);
     }
 
+    @RequestMapping("getWords")
+    public List<String> getWords(String text){
+        logger.info(text);
+        return checkWordsService.getWords(text);
+    }
+
     @RequestMapping("getDocuments")
     public List<DocumentInformation> getDocuments() {
         ArrayList<String> list = new ArrayList<>();
@@ -51,11 +57,10 @@ public class First {
 
     @RequestMapping("getSynonyms")
     public Synonyms getSynonyms(String txt) {
-        KeyWords keyWords = new KeyWords();
         ArrayList list = new ArrayList();
         list.add("老师");
         list.add("学生");
-        keyWords.setKeyWords(list);
-        return commonThesaurusService.getSynonyms(keyWords, "");
+
+        return checkWordsService.getRemoteSynonyWords(list);
     }
 }

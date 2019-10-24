@@ -19,7 +19,7 @@
     text
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="ResultMapWithBLOBs">
-    select 
+    select
     <include refid="Base_Column_List" />
     ,
     <include refid="Blob_Column_List" />
@@ -31,11 +31,11 @@
     where ID = #{id,jdbcType=INTEGER}
   </delete>
   <insert id="insert" parameterType="com.example.keywords.model.DocumentInformation">
-    insert into document_information (ID, title, type, 
-      create_time, update_time, is_delete, 
+    insert into document_information (ID, title, type,
+      create_time, update_time, is_delete,
       text)
-    values (#{id,jdbcType=INTEGER}, #{title,jdbcType=VARCHAR}, #{type,jdbcType=TINYINT}, 
-      #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, #{isDelete,jdbcType=TINYINT}, 
+    values (#{id,jdbcType=INTEGER}, #{title,jdbcType=VARCHAR}, #{type,jdbcType=TINYINT},
+      #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, #{isDelete,jdbcType=TINYINT},
       #{text,jdbcType=LONGVARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.example.keywords.model.DocumentInformation">
@@ -148,7 +148,7 @@
     text
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="ResultMapWithBLOBs">
-    select 
+    select
     <include refid="Base_Column_List" />
     ,
     <include refid="Blob_Column_List" />
@@ -160,11 +160,11 @@
     where ID = #{id,jdbcType=INTEGER}
   </delete>
   <insert id="insert" parameterType="com.example.keywords.model.DocumentInformation">
-    insert into document_information (ID, title, type, 
-      create_time, update_time, is_delete, 
+    insert into document_information (ID, title, type,
+      create_time, update_time, is_delete,
       text)
-    values (#{id,jdbcType=INTEGER}, #{title,jdbcType=VARCHAR}, #{type,jdbcType=TINYINT}, 
-      #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, #{isDelete,jdbcType=TINYINT}, 
+    values (#{id,jdbcType=INTEGER}, #{title,jdbcType=VARCHAR}, #{type,jdbcType=TINYINT},
+      #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, #{isDelete,jdbcType=TINYINT},
       #{text,jdbcType=LONGVARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.example.keywords.model.DocumentInformation">
@@ -259,4 +259,35 @@
       is_delete = #{isDelete,jdbcType=TINYINT}
     where ID = #{id,jdbcType=INTEGER}
   </update>
+
+  <select id="getDocumenForKeyWord" parameterType="java.lang.Integer" >
+    select disconnect <include refid="Base_Column_List" />,realWeight = common_thesaurus.weight *
+    word_document_rela.handle_weight
+    from document_information ,word_document_rela,common_thesaurus
+    where document_information.ID in
+    (
+    select document_id
+    from word_document_rela
+    where word_document_rela.keyword_id in
+    (
+    select ID
+    from common_thesaurus
+    <where>
+      <if test="keywords != null">
+        and common_thesaurus.common_words in
+        <foreach collection="keywords" item="item" index="index"
+                 open="(" separator="," close=")">
+          #{item}
+        </foreach>
+      </if>
+    </where>)
+    )
+    order by realWeight
+    limit #{number,jdbcType=INTEGER}
+
+  </select>
+
+  <select id="getDocumenForKeyWord">
+
+  </select>
 </mapper>

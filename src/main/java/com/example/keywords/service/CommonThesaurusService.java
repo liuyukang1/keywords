@@ -9,6 +9,7 @@ import com.example.keywords.model.Synonyms;
  * @date: 10/23/2019
  */
 public interface CommonThesaurusService {
+    CommonThesaurus selectByPrimaryKey(Integer id);
 
     /**
      * 将传入文本进行关键词获取

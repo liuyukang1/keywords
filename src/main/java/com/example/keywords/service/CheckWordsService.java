@@ -1,6 +1,6 @@
 package com.example.keywords.service;
 
-import com.example.keywords.model.DocumentInformation;
+import com.example.keywords.model.Synonyms;
 
 import java.util.List;
 
@@ -11,16 +11,24 @@ import java.util.List;
 public interface CheckWordsService {
 
     /**
+     * 根据用户输入查询文章
+     * @param text
+     */
+
+    void searchForInput(String text,Integer number);
+    /**
      * 根据用户传入文本，筛选关键字
      * @return
      */
-    void getKeyWords(String txt);
+    List<String> getWords(String txt);
 
     /**
      * 获得关联词 （远端）
      * @param wordList
      */
-    void getRemoteSynonyWords(List<String> wordList);
+    Synonyms getRemoteSynonyWords(List<String> wordList);
+
+
 
     /**
      * 获得关联词 （本地）

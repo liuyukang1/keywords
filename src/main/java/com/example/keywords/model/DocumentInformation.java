@@ -17,6 +17,8 @@ public class DocumentInformation {
 
     private String text;
 
+    private  Integer realWeight;
+
     public Integer getId() {
         return id;
     }
@@ -71,5 +73,9 @@ public class DocumentInformation {
 
     public void setText(String text) {
         this.text = text;
+    }
+
+    public Integer getRealWeight() {
+        return realWeight;
     }
 }
