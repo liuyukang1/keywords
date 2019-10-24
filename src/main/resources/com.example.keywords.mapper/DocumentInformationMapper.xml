@@ -3,17 +3,13 @@
 <mapper namespace="com.example.keywords.dao.DocumentInformationMapper">
   <resultMap id="BaseResultMap" type="com.example.keywords.model.DocumentInformation">
     <id column="ID" jdbcType="INTEGER" property="id" />
-    <result column="title" jdbcType="VARCHAR" property="title" />
-    <result column="type" jdbcType="TINYINT" property="type" />
-    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
-    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
     <result column="is_delete" jdbcType="TINYINT" property="isDelete" />
   </resultMap>
   <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.example.keywords.model.DocumentInformation">
     <result column="text" jdbcType="LONGVARCHAR" property="text" />
   </resultMap>
   <sql id="Base_Column_List">
-    ID, title, type, create_time, update_time, is_delete
+    ID, is_delete
   </sql>
   <sql id="Blob_Column_List">
     text
@@ -31,30 +27,14 @@
     where ID = #{id,jdbcType=INTEGER}
   </delete>
   <insert id="insert" parameterType="com.example.keywords.model.DocumentInformation">
-    insert into document_information (ID, title, type, 
-      create_time, update_time, is_delete, 
-      text)
-    values (#{id,jdbcType=INTEGER}, #{title,jdbcType=VARCHAR}, #{type,jdbcType=TINYINT}, 
-      #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, #{isDelete,jdbcType=TINYINT}, 
-      #{text,jdbcType=LONGVARCHAR})
+    insert into document_information (ID, is_delete, text)
+    values (#{id,jdbcType=INTEGER}, #{isDelete,jdbcType=TINYINT}, #{text,jdbcType=LONGVARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.example.keywords.model.DocumentInformation">
     insert into document_information
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="id != null">
         ID,
-      </if>
-      <if test="title != null">
-        title,
-      </if>
-      <if test="type != null">
-        type,
-      </if>
-      <if test="createTime != null">
-        create_time,
-      </if>
-      <if test="updateTime != null">
-        update_time,
       </if>
       <if test="isDelete != null">
         is_delete,
@@ -67,18 +47,6 @@
       <if test="id != null">
         #{id,jdbcType=INTEGER},
       </if>
-      <if test="title != null">
-        #{title,jdbcType=VARCHAR},
-      </if>
-      <if test="type != null">
-        #{type,jdbcType=TINYINT},
-      </if>
-      <if test="createTime != null">
-        #{createTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="updateTime != null">
-        #{updateTime,jdbcType=TIMESTAMP},
-      </if>
       <if test="isDelete != null">
         #{isDelete,jdbcType=TINYINT},
       </if>
@@ -90,18 +58,6 @@
   <update id="updateByPrimaryKeySelective" parameterType="com.example.keywords.model.DocumentInformation">
     update document_information
     <set>
-      <if test="title != null">
-        title = #{title,jdbcType=VARCHAR},
-      </if>
-      <if test="type != null">
-        type = #{type,jdbcType=TINYINT},
-      </if>
-      <if test="createTime != null">
-        create_time = #{createTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="updateTime != null">
-        update_time = #{updateTime,jdbcType=TIMESTAMP},
-      </if>
       <if test="isDelete != null">
         is_delete = #{isDelete,jdbcType=TINYINT},
       </if>
@@ -113,150 +69,13 @@
   </update>
   <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.example.keywords.model.DocumentInformation">
     update document_information
-    set title = #{title,jdbcType=VARCHAR},
-      type = #{type,jdbcType=TINYINT},
-      create_time = #{createTime,jdbcType=TIMESTAMP},
-      update_time = #{updateTime,jdbcType=TIMESTAMP},
-      is_delete = #{isDelete,jdbcType=TINYINT},
+    set is_delete = #{isDelete,jdbcType=TINYINT},
       text = #{text,jdbcType=LONGVARCHAR}
     where ID = #{id,jdbcType=INTEGER}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.example.keywords.model.DocumentInformation">
     update document_information
-    set title = #{title,jdbcType=VARCHAR},
-      type = #{type,jdbcType=TINYINT},
-      create_time = #{createTime,jdbcType=TIMESTAMP},
-      update_time = #{updateTime,jdbcType=TIMESTAMP},
-      is_delete = #{isDelete,jdbcType=TINYINT}
-    where ID = #{id,jdbcType=INTEGER}
-  </update>
-  <resultMap id="BaseResultMap" type="com.example.keywords.model.DocumentInformation">
-    <id column="ID" jdbcType="INTEGER" property="id" />
-    <result column="title" jdbcType="VARCHAR" property="title" />
-    <result column="type" jdbcType="TINYINT" property="type" />
-    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
-    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
-    <result column="is_delete" jdbcType="TINYINT" property="isDelete" />
-  </resultMap>
-  <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.example.keywords.model.DocumentInformation">
-    <result column="text" jdbcType="LONGVARCHAR" property="text" />
-  </resultMap>
-  <sql id="Base_Column_List">
-    ID, title, type, create_time, update_time, is_delete
-  </sql>
-  <sql id="Blob_Column_List">
-    text
-  </sql>
-  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="ResultMapWithBLOBs">
-    select 
-    <include refid="Base_Column_List" />
-    ,
-    <include refid="Blob_Column_List" />
-    from document_information
-    where ID = #{id,jdbcType=INTEGER}
-  </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
-    delete from document_information
-    where ID = #{id,jdbcType=INTEGER}
-  </delete>
-  <insert id="insert" parameterType="com.example.keywords.model.DocumentInformation">
-    insert into document_information (ID, title, type, 
-      create_time, update_time, is_delete, 
-      text)
-    values (#{id,jdbcType=INTEGER}, #{title,jdbcType=VARCHAR}, #{type,jdbcType=TINYINT}, 
-      #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, #{isDelete,jdbcType=TINYINT}, 
-      #{text,jdbcType=LONGVARCHAR})
-  </insert>
-  <insert id="insertSelective" parameterType="com.example.keywords.model.DocumentInformation">
-    insert into document_information
-    <trim prefix="(" suffix=")" suffixOverrides=",">
-      <if test="id != null">
-        ID,
-      </if>
-      <if test="title != null">
-        title,
-      </if>
-      <if test="type != null">
-        type,
-      </if>
-      <if test="createTime != null">
-        create_time,
-      </if>
-      <if test="updateTime != null">
-        update_time,
-      </if>
-      <if test="isDelete != null">
-        is_delete,
-      </if>
-      <if test="text != null">
-        text,
-      </if>
-    </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides=",">
-      <if test="id != null">
-        #{id,jdbcType=INTEGER},
-      </if>
-      <if test="title != null">
-        #{title,jdbcType=VARCHAR},
-      </if>
-      <if test="type != null">
-        #{type,jdbcType=TINYINT},
-      </if>
-      <if test="createTime != null">
-        #{createTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="updateTime != null">
-        #{updateTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="isDelete != null">
-        #{isDelete,jdbcType=TINYINT},
-      </if>
-      <if test="text != null">
-        #{text,jdbcType=LONGVARCHAR},
-      </if>
-    </trim>
-  </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.example.keywords.model.DocumentInformation">
-    update document_information
-    <set>
-      <if test="title != null">
-        title = #{title,jdbcType=VARCHAR},
-      </if>
-      <if test="type != null">
-        type = #{type,jdbcType=TINYINT},
-      </if>
-      <if test="createTime != null">
-        create_time = #{createTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="updateTime != null">
-        update_time = #{updateTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="isDelete != null">
-        is_delete = #{isDelete,jdbcType=TINYINT},
-      </if>
-      <if test="text != null">
-        text = #{text,jdbcType=LONGVARCHAR},
-      </if>
-    </set>
-    where ID = #{id,jdbcType=INTEGER}
-  </update>
-  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.example.keywords.model.DocumentInformation">
-    update document_information
-    set title = #{title,jdbcType=VARCHAR},
-      type = #{type,jdbcType=TINYINT},
-      create_time = #{createTime,jdbcType=TIMESTAMP},
-      update_time = #{updateTime,jdbcType=TIMESTAMP},
-      is_delete = #{isDelete,jdbcType=TINYINT},
-      text = #{text,jdbcType=LONGVARCHAR}
-    where ID = #{id,jdbcType=INTEGER}
-  </update>
-  <update id="updateByPrimaryKey" parameterType="com.example.keywords.model.DocumentInformation">
-    update document_information
-    set title = #{title,jdbcType=VARCHAR},
-      type = #{type,jdbcType=TINYINT},
-      create_time = #{createTime,jdbcType=TIMESTAMP},
-      update_time = #{updateTime,jdbcType=TIMESTAMP},
-      is_delete = #{isDelete,jdbcType=TINYINT}
+    set is_delete = #{isDelete,jdbcType=TINYINT}
     where ID = #{id,jdbcType=INTEGER}
   </update>
 </mapper>

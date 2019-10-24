@@ -29,33 +29,18 @@ public class First {
 
     Logger logger = Logger.getAnonymousLogger();
 
-    @RequestMapping("get")
-    public CommonThesaurus selectByPrimaryKey() {
-        return commonThesaurusService.selectByPrimaryKey(1);
-    }
-
     @RequestMapping("getDocuments")
     public List<DocumentInformation> getDocuments() {
         ArrayList<String> list = new ArrayList<>();
         list.add("学生");
         list.add("老师");
-//        return checkWordsService.getDocuments(list);
         return null;
     }
 
-    @RequestMapping("getKeywords")
-    public KeyWords getKeywords(String txt) {
-        logger.info(txt);
-       return commonThesaurusService.getKeywords(txt);
+    @RequestMapping("initText")
+    public void initText() {
+        commonThesaurusService.initText("我们都是好学生");
     }
 
-    @RequestMapping("getSynonyms")
-    public Synonyms getSynonyms(String txt) {
-        KeyWords keyWords = new KeyWords();
-        ArrayList list = new ArrayList();
-        list.add("老师");
-        list.add("学生");
-        keyWords.setKeyWords(list);
-        return commonThesaurusService.getSynonyms(keyWords, "");
-    }
+
 }

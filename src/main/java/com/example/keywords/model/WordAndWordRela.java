@@ -1,7 +1,5 @@
 package com.example.keywords.model;
 
-import java.util.Date;
-
 public class WordAndWordRela {
     private Integer id;
 
@@ -10,10 +8,6 @@ public class WordAndWordRela {
     private Integer extendWordId;
 
     private Double weight;
-
-    private Date createTime;
-
-    private Date updateTime;
 
     public Integer getId() {
         return id;
@@ -45,21 +39,5 @@ public class WordAndWordRela {
 
     public void setWeight(Double weight) {
         this.weight = weight;
-    }
-
-    public Date getCreateTime() {
-        return createTime;
-    }
-
-    public void setCreateTime(Date createTime) {
-        this.createTime = createTime;
-    }
-
-    public Date getUpdateTime() {
-        return updateTime;
-    }
-
-    public void setUpdateTime(Date updateTime) {
-        this.updateTime = updateTime;
     }
 }
