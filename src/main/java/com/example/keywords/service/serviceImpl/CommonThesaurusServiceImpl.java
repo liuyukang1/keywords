@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 import com.example.keywords.base.BaseModel;
 
 
+import java.lang.reflect.Array;
 import java.lang.reflect.Type;
 import java.util.*;
 import java.util.logging.Logger;
@@ -29,6 +30,7 @@ public class CommonThesaurusServiceImpl implements CommonThesaurusService {
 
     @Autowired
     CommonThesaurusMapper commonThesaurusMapper;
+
 
     @Override
     public CommonThesaurus selectByPrimaryKey(Integer id) {
@@ -72,4 +74,17 @@ public class CommonThesaurusServiceImpl implements CommonThesaurusService {
         return synonyms;
     }
 
+//    获取用户搜索关键字
+
+    public List<String> getWords(String txt){
+        Map<String,String> map = new HashMap<>();
+        map.put("txt",txt);
+        String wordsStr = baseModel.getWithParamtersWithoutToken(APIConfig.GET_WORDS,map);
+        logger.info(wordsStr);
+        Gson gson = new Gson();
+        HashMap<String,List<String>> result = gson.fromJson(wordsStr, HashMap.class);
+        List<String> resultWords = result.get("words");
+
+        return resultWords;
+    }
 }
