@@ -1,6 +1,8 @@
 package com.example.keywords.service;
 
 import com.example.keywords.model.CommonThesaurus;
+import com.example.keywords.model.KeyWords;
+import com.example.keywords.model.Synonyms;
 
 /**
  * @author: lyk
@@ -8,4 +10,8 @@ import com.example.keywords.model.CommonThesaurus;
  */
 public interface CommonThesaurusService {
     CommonThesaurus selectByPrimaryKey(Integer id);
+
+    KeyWords getKeywords(String txt);
+
+    Synonyms getSynonyms(KeyWords keyWords, String url);
 }

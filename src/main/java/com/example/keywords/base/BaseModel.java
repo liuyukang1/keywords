@@ -6,12 +6,15 @@ import okhttp3.*;
 
 import java.io.IOException;
 import java.util.Map;
+import java.util.logging.Logger;
 
 /**
  * @author: lyk
  * @date: 10/23/2019
  */
 public class BaseModel {
+
+    Logger logger = Logger.getAnonymousLogger();
     /**
      * get不带token带parameter获得数据
      * @param url
@@ -35,6 +38,7 @@ public class BaseModel {
         try{
             Response response = client.newCall(request).execute();
             String res = response.body().string();
+            logger.info(res);
             return res;
         }
         catch (Exception ex) {
@@ -69,7 +73,8 @@ public class BaseModel {
         } catch (IOException e) {
             e.printStackTrace();
             return null;
-        }finally {
+        } finally {
+
         }
     }
 

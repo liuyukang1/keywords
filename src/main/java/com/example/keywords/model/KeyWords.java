@@ -1,25 +1,18 @@
 package com.example.keywords.model;
 
-import java.util.HashMap;
+
 import java.util.List;
 
 public class KeyWords {
-    List<String> keyWords;
-    List<Double> score;
+   List<List<String>> keyWords;
 
-    public List<String> getKeyWords() {
+
+    public List<List<String>> getKeyWords() {
         return keyWords;
     }
 
-    public void setKeyWords(List<String> keyWords) {
+    public void setKeyWords(List<List<String>> keyWords) {
         this.keyWords = keyWords;
     }
 
-    public List<Double> getScore() {
-        return score;
-    }
-
-    public void setScore(List<Double> score) {
-        this.score = score;
-    }
 }
