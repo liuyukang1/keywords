@@ -1,0 +1,208 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.keywords.dao.WordAndWordRelaMapper">
+  <resultMap id="BaseResultMap" type="com.example.keywords.model.WordAndWordRela">
+    <id column="ID" jdbcType="INTEGER" property="id" />
+    <result column="base_word_id" jdbcType="INTEGER" property="baseWordId" />
+    <result column="extend_word_id" jdbcType="INTEGER" property="extendWordId" />
+    <result column="weight" jdbcType="DOUBLE" property="weight" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    ID, base_word_id, extend_word_id, weight, create_time, update_time
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from word_and_word_rela
+    where ID = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from word_and_word_rela
+    where ID = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.example.keywords.model.WordAndWordRela">
+    insert into word_and_word_rela (ID, base_word_id, extend_word_id, 
+      weight, create_time, update_time
+      )
+    values (#{id,jdbcType=INTEGER}, #{baseWordId,jdbcType=INTEGER}, #{extendWordId,jdbcType=INTEGER}, 
+      #{weight,jdbcType=DOUBLE}, #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.example.keywords.model.WordAndWordRela">
+    insert into word_and_word_rela
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        ID,
+      </if>
+      <if test="baseWordId != null">
+        base_word_id,
+      </if>
+      <if test="extendWordId != null">
+        extend_word_id,
+      </if>
+      <if test="weight != null">
+        weight,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="updateTime != null">
+        update_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="baseWordId != null">
+        #{baseWordId,jdbcType=INTEGER},
+      </if>
+      <if test="extendWordId != null">
+        #{extendWordId,jdbcType=INTEGER},
+      </if>
+      <if test="weight != null">
+        #{weight,jdbcType=DOUBLE},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.example.keywords.model.WordAndWordRela">
+    update word_and_word_rela
+    <set>
+      <if test="baseWordId != null">
+        base_word_id = #{baseWordId,jdbcType=INTEGER},
+      </if>
+      <if test="extendWordId != null">
+        extend_word_id = #{extendWordId,jdbcType=INTEGER},
+      </if>
+      <if test="weight != null">
+        weight = #{weight,jdbcType=DOUBLE},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.example.keywords.model.WordAndWordRela">
+    update word_and_word_rela
+    set base_word_id = #{baseWordId,jdbcType=INTEGER},
+      extend_word_id = #{extendWordId,jdbcType=INTEGER},
+      weight = #{weight,jdbcType=DOUBLE},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP}
+    where ID = #{id,jdbcType=INTEGER}
+  </update>
+  <resultMap id="BaseResultMap" type="com.example.keywords.model.WordAndWordRela">
+    <id column="ID" jdbcType="INTEGER" property="id" />
+    <result column="base_word_id" jdbcType="INTEGER" property="baseWordId" />
+    <result column="extend_word_id" jdbcType="INTEGER" property="extendWordId" />
+    <result column="weight" jdbcType="DOUBLE" property="weight" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    ID, base_word_id, extend_word_id, weight, create_time, update_time
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from word_and_word_rela
+    where ID = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from word_and_word_rela
+    where ID = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.example.keywords.model.WordAndWordRela">
+    insert into word_and_word_rela (ID, base_word_id, extend_word_id, 
+      weight, create_time, update_time
+      )
+    values (#{id,jdbcType=INTEGER}, #{baseWordId,jdbcType=INTEGER}, #{extendWordId,jdbcType=INTEGER}, 
+      #{weight,jdbcType=DOUBLE}, #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.example.keywords.model.WordAndWordRela">
+    insert into word_and_word_rela
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        ID,
+      </if>
+      <if test="baseWordId != null">
+        base_word_id,
+      </if>
+      <if test="extendWordId != null">
+        extend_word_id,
+      </if>
+      <if test="weight != null">
+        weight,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="updateTime != null">
+        update_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="baseWordId != null">
+        #{baseWordId,jdbcType=INTEGER},
+      </if>
+      <if test="extendWordId != null">
+        #{extendWordId,jdbcType=INTEGER},
+      </if>
+      <if test="weight != null">
+        #{weight,jdbcType=DOUBLE},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.example.keywords.model.WordAndWordRela">
+    update word_and_word_rela
+    <set>
+      <if test="baseWordId != null">
+        base_word_id = #{baseWordId,jdbcType=INTEGER},
+      </if>
+      <if test="extendWordId != null">
+        extend_word_id = #{extendWordId,jdbcType=INTEGER},
+      </if>
+      <if test="weight != null">
+        weight = #{weight,jdbcType=DOUBLE},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.example.keywords.model.WordAndWordRela">
+    update word_and_word_rela
+    set base_word_id = #{baseWordId,jdbcType=INTEGER},
+      extend_word_id = #{extendWordId,jdbcType=INTEGER},
+      weight = #{weight,jdbcType=DOUBLE},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP}
+    where ID = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

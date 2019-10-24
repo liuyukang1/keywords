@@ -33,6 +33,10 @@
                enableSelectByExample="false" selectByExampleQueryId="false" ></table>
         <table schema="" tableName="document_information" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false"
                enableSelectByExample="false" selectByExampleQueryId="false" ></table>
+        <table schema="" tableName="word_and_word_rela" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false"
+               enableSelectByExample="false" selectByExampleQueryId="false" ></table>
+        <table schema="" tableName="word_document_rela" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false"
+               enableSelectByExample="false" selectByExampleQueryId="false" ></table>
 
 
     </context>

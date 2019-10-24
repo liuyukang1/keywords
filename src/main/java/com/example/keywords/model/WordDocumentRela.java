@@ -2,18 +2,18 @@ package com.example.keywords.model;
 
 import java.util.Date;
 
-public class CommonThesaurus {
+public class WordDocumentRela {
     private Integer id;
 
-    private String commonWords;
+    private Integer keywordId;
 
-    private Double handleWeight;
+    private Integer documentId;
+
+    private Double weight;
 
     private Date createTime;
 
     private Date updateTime;
-
-    private Byte isDelete;
 
     public Integer getId() {
         return id;
@@ -23,20 +23,28 @@ public class CommonThesaurus {
         this.id = id;
     }
 
-    public String getCommonWords() {
-        return commonWords;
+    public Integer getKeywordId() {
+        return keywordId;
     }
 
-    public void setCommonWords(String commonWords) {
-        this.commonWords = commonWords;
+    public void setKeywordId(Integer keywordId) {
+        this.keywordId = keywordId;
     }
 
-    public Double getHandleWeight() {
-        return handleWeight;
+    public Integer getDocumentId() {
+        return documentId;
     }
 
-    public void setHandleWeight(Double handleWeight) {
-        this.handleWeight = handleWeight;
+    public void setDocumentId(Integer documentId) {
+        this.documentId = documentId;
+    }
+
+    public Double getWeight() {
+        return weight;
+    }
+
+    public void setWeight(Double weight) {
+        this.weight = weight;
     }
 
     public Date getCreateTime() {
@@ -53,13 +61,5 @@ public class CommonThesaurus {
 
     public void setUpdateTime(Date updateTime) {
         this.updateTime = updateTime;
-    }
-
-    public Byte getIsDelete() {
-        return isDelete;
-    }
-
-    public void setIsDelete(Byte isDelete) {
-        this.isDelete = isDelete;
     }
 }

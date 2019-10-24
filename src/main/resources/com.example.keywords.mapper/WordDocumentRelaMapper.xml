@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.keywords.dao.WordDocumentRelaMapper">
+  <resultMap id="BaseResultMap" type="com.example.keywords.model.WordDocumentRela">
+    <id column="ID" jdbcType="INTEGER" property="id" />
+    <result column="keyword_id" jdbcType="INTEGER" property="keywordId" />
+    <result column="document_id" jdbcType="INTEGER" property="documentId" />
+    <result column="weight" jdbcType="DOUBLE" property="weight" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    ID, keyword_id, document_id, weight, create_time, update_time
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from word_document_rela
+    where ID = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from word_document_rela
+    where ID = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.example.keywords.model.WordDocumentRela">
+    insert into word_document_rela (ID, keyword_id, document_id, 
+      weight, create_time, update_time
+      )
+    values (#{id,jdbcType=INTEGER}, #{keywordId,jdbcType=INTEGER}, #{documentId,jdbcType=INTEGER}, 
+      #{weight,jdbcType=DOUBLE}, #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.example.keywords.model.WordDocumentRela">
+    insert into word_document_rela
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        ID,
+      </if>
+      <if test="keywordId != null">
+        keyword_id,
+      </if>
+      <if test="documentId != null">
+        document_id,
+      </if>
+      <if test="weight != null">
+        weight,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="updateTime != null">
+        update_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="keywordId != null">
+        #{keywordId,jdbcType=INTEGER},
+      </if>
+      <if test="documentId != null">
+        #{documentId,jdbcType=INTEGER},
+      </if>
+      <if test="weight != null">
+        #{weight,jdbcType=DOUBLE},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.example.keywords.model.WordDocumentRela">
+    update word_document_rela
+    <set>
+      <if test="keywordId != null">
+        keyword_id = #{keywordId,jdbcType=INTEGER},
+      </if>
+      <if test="documentId != null">
+        document_id = #{documentId,jdbcType=INTEGER},
+      </if>
+      <if test="weight != null">
+        weight = #{weight,jdbcType=DOUBLE},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.example.keywords.model.WordDocumentRela">
+    update word_document_rela
+    set keyword_id = #{keywordId,jdbcType=INTEGER},
+      document_id = #{documentId,jdbcType=INTEGER},
+      weight = #{weight,jdbcType=DOUBLE},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP}
+    where ID = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

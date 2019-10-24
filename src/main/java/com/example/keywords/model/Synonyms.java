@@ -12,6 +12,4 @@ public class Synonyms {
     public void setSynonymsWords(List<List<String>> synonymsWords) {
         this.synonymsWords = synonymsWords;
     }
-
-
 }

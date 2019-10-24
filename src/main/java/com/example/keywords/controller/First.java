@@ -39,7 +39,8 @@ public class First {
         ArrayList<String> list = new ArrayList<>();
         list.add("学生");
         list.add("老师");
-        return checkWordsService.getDocuments(list);
+//        return checkWordsService.getDocuments(list);
+        return null;
     }
 
     @RequestMapping("getKeywords")

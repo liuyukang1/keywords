@@ -2,7 +2,9 @@ package com.example.keywords.service.serviceImpl;
 
 import com.example.keywords.config.APIConfig;
 import com.example.keywords.dao.CommonThesaurusMapper;
+import com.example.keywords.dao.DocumentInformationMapper;
 import com.example.keywords.model.CommonThesaurus;
+import com.example.keywords.model.DocumentInformation;
 import com.example.keywords.model.KeyWords;
 import com.example.keywords.model.Synonyms;
 import com.example.keywords.service.CommonThesaurusService;
@@ -12,7 +14,6 @@ import org.springframework.stereotype.Service;
 import com.example.keywords.base.BaseModel;
 
 
-import java.lang.reflect.Array;
 import java.lang.reflect.Type;
 import java.util.*;
 import java.util.logging.Logger;
@@ -24,18 +25,16 @@ import java.util.logging.Logger;
 @Service
 public class CommonThesaurusServiceImpl implements CommonThesaurusService {
 
-    static final BaseModel baseModel = new BaseModel();
-
-    Logger logger = Logger.getAnonymousLogger();
+    static final Gson gson = new Gson();                // Json解析包
+    Logger logger = Logger.getAnonymousLogger();        // 日志类
+    static final BaseModel baseModel = new BaseModel(); // 网络请求封装
 
     @Autowired
-    CommonThesaurusMapper commonThesaurusMapper;
+    private CommonThesaurusMapper commonThesaurusMapper;
 
+    @Autowired
+    private DocumentInformationMapper documentInformationMapper;
 
-    @Override
-    public CommonThesaurus selectByPrimaryKey(Integer id) {
-        return commonThesaurusMapper.selectByPrimaryKey(id);
-    }
 
     @Override
     public KeyWords getKeywords(String txt){
@@ -74,8 +73,6 @@ public class CommonThesaurusServiceImpl implements CommonThesaurusService {
         return synonyms;
     }
 
-//    获取用户搜索关键字
-
     public List<String> getWords(String txt){
         Map<String,String> map = new HashMap<>();
         map.put("txt",txt);
@@ -87,4 +84,46 @@ public class CommonThesaurusServiceImpl implements CommonThesaurusService {
 
         return resultWords;
     }
+
+    @Override
+    public Synonyms getLocalSynonyms(KeyWords keyWords) {
+        return null;
+    }
+
+    @Override
+    public void initText(String text) {
+        // 将文本传入远端解析
+        Map<String, String> map = new HashMap<>();
+        map.put("txt", text);
+
+        String result = baseModel.getWithParamtersWithoutToken(APIConfig.GET_KEYWORD, map);
+        KeyWords keyWords = gson.fromJson(result, KeyWords.class);
+
+        logger.info(result);
+        logger.info(keyWords.getKeyWords().size()+"");
+
+        DocumentInformation documentInformation = new DocumentInformation();
+
+        Integer theTextId = Integer.valueOf(createId());
+        documentInformation.setId(theTextId);
+        documentInformation.setText(text);
+
+        // 将文本存入数据库
+        if(documentInformationMapper.insertSelective(documentInformation)) {
+            saveWords(keyWords, theTextId);
+        }
+    }
+
+    private String createId() {
+        return String.valueOf(System.currentTimeMillis());
+    }
+
+    private void saveWords(KeyWords keyWords, Integer theTextId) {
+        for (int temp = 0; temp < keyWords.getKeyWords().size(); temp++) {
+            for (int element = 0; element < keyWords.getKeyWords().get(0).size(); element++) {
+
+            }
+        }
+    }
+
 }

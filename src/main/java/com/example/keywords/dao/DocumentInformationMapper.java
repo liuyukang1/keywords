@@ -1,21 +1,21 @@
 package com.example.keywords.dao;
 
 import com.example.keywords.model.DocumentInformation;
+import org.springframework.stereotype.Repository;
 
-import java.util.List;
-
+@Repository
 public interface DocumentInformationMapper {
-    int deleteByPrimaryKey(Integer id);
+    boolean deleteByPrimaryKey(Integer id);
 
-    int insert(DocumentInformation record);
+    boolean insert(DocumentInformation record);
 
-    int insertSelective(DocumentInformation record);
+    boolean insertSelective(DocumentInformation record);
 
     DocumentInformation selectByPrimaryKey(Integer id);
 
-    int updateByPrimaryKeySelective(DocumentInformation record);
+    boolean updateByPrimaryKeySelective(DocumentInformation record);
 
-    int updateByPrimaryKeyWithBLOBs(DocumentInformation record);
+    boolean updateByPrimaryKeyWithBLOBs(DocumentInformation record);
 
-    int updateByPrimaryKey(DocumentInformation record);
+    boolean updateByPrimaryKey(DocumentInformation record);
 }
