@@ -9,13 +9,11 @@ import java.util.List;
 @Repository
 public interface DocumentInformationMapper {
 
-
     boolean deleteByPrimaryKey(Integer id);
 
     boolean insert(DocumentInformation record);
 
     boolean insertSelective(DocumentInformation record);
-
 
     List<DocumentInformation> getDocumenForKeyWord(@Param("keyWord")List<String> keyWord,@Param("number") Integer number);
 
