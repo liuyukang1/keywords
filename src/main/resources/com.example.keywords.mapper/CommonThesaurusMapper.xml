@@ -16,6 +16,12 @@
     from common_thesaurus
     where ID = #{id,jdbcType=INTEGER}
   </select>
+  <select id="ifInTheTable" parameterType="java.lang.String" resultType="java.lang.Integer">
+    select
+    id
+    from common_thesaurus
+    where common_words = #{common_words,jdbcType=VARCHAR}
+  </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from common_thesaurus
     where ID = #{id,jdbcType=INTEGER}

@@ -19,7 +19,7 @@ import java.util.logging.Logger;
  * @date: 10/23/2019
  */
 @RestController
-public class First {
+public class TextProController {
 
     @Autowired
     CommonThesaurusService commonThesaurusService;
@@ -27,20 +27,8 @@ public class First {
     @Autowired
     CheckWordsService checkWordsService;
 
-    Logger logger = Logger.getAnonymousLogger();
-
-    @RequestMapping("getDocuments")
-    public List<DocumentInformation> getDocuments() {
-        ArrayList<String> list = new ArrayList<>();
-        list.add("学生");
-        list.add("老师");
-        return null;
-    }
-
     @RequestMapping("initText")
-    public void initText() {
-        commonThesaurusService.initText("我们都是好学生");
+    public void initText(String text) {
+        commonThesaurusService.initText(text);
     }
-
-
 }
