@@ -1,7 +1,11 @@
 package com.example.keywords.dao;
 
+import com.example.keywords.model.RelatedWord;
 import com.example.keywords.model.WordAndWordRela;
 import org.springframework.stereotype.Repository;
+
+import javax.validation.constraints.Max;
+import java.util.List;
 
 @Repository
 public interface WordAndWordRelaMapper {
@@ -16,4 +20,7 @@ public interface WordAndWordRelaMapper {
     boolean updateByPrimaryKeySelective(WordAndWordRela record);
 
     boolean updateByPrimaryKey(WordAndWordRela record);
+
+    List<RelatedWord> relatedWords(List<String> keyWord);
+
 }

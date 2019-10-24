@@ -3,8 +3,11 @@ package com.example.keywords.service.serviceImpl;
 import com.example.keywords.base.BaseModel;
 import com.example.keywords.config.APIConfig;
 import com.example.keywords.dao.DocumentInformationMapper;
+import com.example.keywords.dao.WordAndWordRelaMapper;
 import com.example.keywords.model.DocumentInformation;
+import com.example.keywords.model.RelatedWord;
 import com.example.keywords.model.Synonyms;
+import com.example.keywords.model.WordAndWordRela;
 import com.example.keywords.service.CheckWordsService;
 import com.google.gson.Gson;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,6 +28,7 @@ import java.util.logging.Logger;
 public class CheckWordsServiceImpl implements CheckWordsService {
     @Autowired
     DocumentInformationMapper documentInformationMapper;
+    WordAndWordRelaMapper wordAndWordRelaMapper;
     static final Gson gson = new Gson();                // Json解析包
     Logger logger = Logger.getAnonymousLogger();        // 日志类
     static final BaseModel baseModel = new BaseModel(); // 网络请求封装
@@ -40,15 +44,33 @@ public class CheckWordsServiceImpl implements CheckWordsService {
        List<DocumentInformation> documentInformation = documentInformationMapper.getDocumenForKeyWord(searchWords,number);
 
        if (documentInformation.size() > number){
-//          List<DocumentInformation> documentInformationsFRW  = documentInformationMapper.getDOcumentForRelatedWord(searchWords,number);
-//                  for (int i = 0;i<documentInformationsFRW.size();i++){
-//                      for (int j = 0 ;j<documentInformation.size() ;j++){
-//                          if (documentInformation.get(i).getId() != documentInformationsFRW.get(j).getId()){
-//                              documentInformation.add(documentInformationsFRW.get(j));
-//                          }
-//                      }
-//                  }
-        
+           List<RelatedWord> relatedWords = wordAndWordRelaMapper.relatedWords(searchWords);
+           Synonyms synonyms = getRemoteSynonyWords(searchWords);
+           for(int i = 0; i< synonyms.getSynonymsWords().size();i++) {
+
+               for (int k = 0; k < synonyms.getSynonymsWords().get(i).get(0).size(); k++) {
+                   for (int q = 0; q < relatedWords.size(); q++) {
+                       if (!synonyms.getSynonymsWords().get(i).get(1).get(k).equals(relatedWords.get(q))) {
+                           RelatedWord relatedWord = new RelatedWord();
+                           relatedWord.setWeight(new Double(synonyms.getSynonymsWords().get(i).get(1).get(k)));
+                           relatedWord.setWord(synonyms.getSynonymsWords().get(i).get(0).get(k));
+                           relatedWords.add(relatedWord);
+                       }
+
+
+                   }
+               }
+           }
+           List<DocumentInformation> documentInformationsFRW  = documentInformationMapper.getDOcumentForRelatedWord(searchWords,number - documentInformation.size());
+
+                  for (int i = 0;i<documentInformationsFRW.size();i++){
+                      for (int j = 0 ;j<documentInformation.size() ;j++){
+                          if (documentInformation.get(i).getId() != documentInformationsFRW.get(j).getId()){
+                              documentInformation.add(documentInformationsFRW.get(j));
+                          }
+                      }
+                  }
+
 
        }
     }
