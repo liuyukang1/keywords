@@ -7,6 +7,7 @@ import com.example.keywords.model.Synonyms;
 import com.example.keywords.service.CheckWordsService;
 import com.example.keywords.service.CommonThesaurusService;
 import com.example.keywords.service.serviceImpl.CheckWordsServiceImpl;
+import com.example.keywords.util.JSONResult;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -34,7 +35,8 @@ public class TextProController {
     }
 
     @RequestMapping("divideWords")
-    public void divideWords(String text) {
-        checkWordsService.searchForInput(text, 6);
+    public JSONResult divideWords(String text) {
+        JSONResult jsonResult = new JSONResult(checkWordsService.searchForInput(text, 6));
+        return jsonResult;
     }
 }

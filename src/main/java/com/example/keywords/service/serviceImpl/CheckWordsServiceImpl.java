@@ -45,10 +45,14 @@ public class CheckWordsServiceImpl implements CheckWordsService {
      * @param number
      */
     @Override
-    public void searchForInput(String text, Integer number) {
+    public List<DocumentInformation> searchForInput(String text, Integer number) {
 
-        // 远端获取文本分词
+        // 远端获取文本分词 (预查询列表)
         ArrayList<String> searchWords = (ArrayList<String>) getWords(text);
+
+        // 如果没有词，则直接返回
+        if (searchWords.size() == 0)
+            return new ArrayList<>();
 
         // 远端获取词集关联词集
         Synonyms synonyms = getRemoteSynonyWords(searchWords);
@@ -75,9 +79,6 @@ public class CheckWordsServiceImpl implements CheckWordsService {
             }
         }
 
-        // 清空原词集
-//        searchWords.clear();
-
         // 将远端本地词集全部转入查询队列
         for (int t = 0; t < relatedWords.size(); t++) {
             searchWords.add(relatedWords.get(t).getCommonWords());
@@ -85,6 +86,8 @@ public class CheckWordsServiceImpl implements CheckWordsService {
 
         // 本地获取词集对应文本
         List<DocumentInformation> documentInformation = getDocuments(searchWords);
+
+        return documentInformation;
     }
 
     /**

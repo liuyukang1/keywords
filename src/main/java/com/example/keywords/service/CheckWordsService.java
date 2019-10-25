@@ -19,7 +19,7 @@ public interface CheckWordsService {
      * @param text
      */
 
-    void searchForInput(String text, Integer number);
+    List<DocumentInformation> searchForInput(String text, Integer number);
 
     /**
      * 根据用户传入文本，筛选关键字
