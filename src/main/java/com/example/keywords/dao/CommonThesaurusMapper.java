@@ -11,6 +11,8 @@ public interface CommonThesaurusMapper {
 
     boolean insertSelective(CommonThesaurus record);
 
+    Integer ifInTheTable(String commonWords);
+
     CommonThesaurus selectByPrimaryKey(Integer id);
 
     boolean updateByPrimaryKeySelective(CommonThesaurus record);

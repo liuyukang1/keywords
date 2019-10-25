@@ -6,11 +6,9 @@
     <result column="keyword_id" jdbcType="INTEGER" property="keywordId" />
     <result column="document_id" jdbcType="INTEGER" property="documentId" />
     <result column="weight" jdbcType="DOUBLE" property="weight" />
-    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
-    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
   </resultMap>
   <sql id="Base_Column_List">
-    ID, keyword_id, document_id, weight, create_time, update_time
+    ID, keyword_id, document_id, weight
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select 
@@ -24,10 +22,10 @@
   </delete>
   <insert id="insert" parameterType="com.example.keywords.model.WordDocumentRela">
     insert into word_document_rela (ID, keyword_id, document_id, 
-      weight, create_time, update_time
+      weight
       )
     values (#{id,jdbcType=INTEGER}, #{keywordId,jdbcType=INTEGER}, #{documentId,jdbcType=INTEGER}, 
-      #{weight,jdbcType=DOUBLE}, #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}
+      #{weight,jdbcType=DOUBLE}
       )
   </insert>
   <insert id="insertSelective" parameterType="com.example.keywords.model.WordDocumentRela">
@@ -45,12 +43,6 @@
       <if test="weight != null">
         weight,
       </if>
-      <if test="createTime != null">
-        create_time,
-      </if>
-      <if test="updateTime != null">
-        update_time,
-      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="id != null">
@@ -64,12 +56,6 @@
       </if>
       <if test="weight != null">
         #{weight,jdbcType=DOUBLE},
-      </if>
-      <if test="createTime != null">
-        #{createTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="updateTime != null">
-        #{updateTime,jdbcType=TIMESTAMP},
       </if>
     </trim>
   </insert>
@@ -85,12 +71,6 @@
       <if test="weight != null">
         weight = #{weight,jdbcType=DOUBLE},
       </if>
-      <if test="createTime != null">
-        create_time = #{createTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="updateTime != null">
-        update_time = #{updateTime,jdbcType=TIMESTAMP},
-      </if>
     </set>
     where ID = #{id,jdbcType=INTEGER}
   </update>
@@ -98,9 +78,7 @@
     update word_document_rela
     set keyword_id = #{keywordId,jdbcType=INTEGER},
       document_id = #{documentId,jdbcType=INTEGER},
-      weight = #{weight,jdbcType=DOUBLE},
-      create_time = #{createTime,jdbcType=TIMESTAMP},
-      update_time = #{updateTime,jdbcType=TIMESTAMP}
+      weight = #{weight,jdbcType=DOUBLE}
     where ID = #{id,jdbcType=INTEGER}
   </update>
 </mapper>

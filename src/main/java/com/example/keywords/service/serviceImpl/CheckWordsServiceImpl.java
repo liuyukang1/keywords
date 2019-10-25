@@ -127,6 +127,11 @@ public class CheckWordsServiceImpl implements CheckWordsService {
 
     }
 
+    @Override
+    public List<DocumentInformation> getDocuments(List<String> keywords) {
+        return null;
+    }
+
 //    @Override
 //    public List<DocumentInformation> getDocuments(List<String> keywords) {
 //        return null;

@@ -38,6 +38,5 @@
         <table schema="" tableName="word_document_rela" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false"
                enableSelectByExample="false" selectByExampleQueryId="false" ></table>
 
-
     </context>
 </generatorConfiguration>

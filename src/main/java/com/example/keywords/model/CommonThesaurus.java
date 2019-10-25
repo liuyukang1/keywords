@@ -1,17 +1,11 @@
 package com.example.keywords.model;
 
-import java.util.Date;
-
 public class CommonThesaurus {
     private Integer id;
 
     private String commonWords;
 
     private Double handleWeight;
-
-    private Date createTime;
-
-    private Date updateTime;
 
     private Byte isDelete;
 
@@ -37,22 +31,6 @@ public class CommonThesaurus {
 
     public void setHandleWeight(Double handleWeight) {
         this.handleWeight = handleWeight;
-    }
-
-    public Date getCreateTime() {
-        return createTime;
-    }
-
-    public void setCreateTime(Date createTime) {
-        this.createTime = createTime;
-    }
-
-    public Date getUpdateTime() {
-        return updateTime;
-    }
-
-    public void setUpdateTime(Date updateTime) {
-        this.updateTime = updateTime;
     }
 
     public Byte getIsDelete() {

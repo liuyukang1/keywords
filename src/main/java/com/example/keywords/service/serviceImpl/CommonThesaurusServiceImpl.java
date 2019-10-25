@@ -3,15 +3,14 @@ package com.example.keywords.service.serviceImpl;
 import com.example.keywords.config.APIConfig;
 import com.example.keywords.dao.CommonThesaurusMapper;
 import com.example.keywords.dao.DocumentInformationMapper;
-import com.example.keywords.model.CommonThesaurus;
-import com.example.keywords.model.DocumentInformation;
-import com.example.keywords.model.KeyWords;
-import com.example.keywords.model.Synonyms;
+import com.example.keywords.dao.WordDocumentRelaMapper;
+import com.example.keywords.model.*;
 import com.example.keywords.service.CommonThesaurusService;
 import com.google.gson.Gson;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.example.keywords.base.BaseModel;
+import org.springframework.transaction.annotation.Transactional;
 
 
 import java.lang.reflect.Type;
@@ -19,6 +18,7 @@ import java.util.*;
 import java.util.logging.Logger;
 
 /**
+ * 文本初始化类
  * @author: lyk
  * @date: 10/23/2019
  */
@@ -35,85 +35,67 @@ public class CommonThesaurusServiceImpl implements CommonThesaurusService {
     @Autowired
     private DocumentInformationMapper documentInformationMapper;
 
+    @Autowired
+    private WordDocumentRelaMapper wordDocumentRelaMapper;
 
     @Override
-    public CommonThesaurus selectByPrimaryKey(Integer id) {
-        return null;
-    }
-
-    @Override
-    public KeyWords getKeywords(String txt){
-        Map<String, String> map = new HashMap<>();
-        try{
-            map.put("txt",txt);
-        }catch (Exception e) {
-            e.printStackTrace();
-        }
-
-        String result = baseModel.getWithParamtersWithoutToken(APIConfig.GET_KEYWORD, map);
-        Gson gson = new Gson();
-
-        KeyWords keyWords = gson.fromJson(result,KeyWords.class);
-        logger.info(keyWords.getKeyWords().size()+"");
-        return keyWords;
-    }
-
-    @Override
-    public Synonyms getSynonyms(KeyWords keyWords, String url) {
-        return null;
-    }
-
-
-    public List<String> getWords(String txt){
-        Map<String,String> map = new HashMap<>();
-        map.put("txt",txt);
-        String wordsStr = baseModel.getWithParamtersWithoutToken(APIConfig.GET_WORDS,map);
-        logger.info(wordsStr);
-        Gson gson = new Gson();
-        HashMap<String,List<String>> result = gson.fromJson(wordsStr, HashMap.class);
-        List<String> resultWords = result.get("words");
-
-        return resultWords;
-    }
-
-    @Override
-    public Synonyms getLocalSynonyms(KeyWords keyWords) {
-        return null;
-    }
-
-    @Override
+    @Transactional
     public void initText(String text) {
         // 将文本传入远端解析
+        // 获得文本分词及其权重
         Map<String, String> map = new HashMap<>();
         map.put("txt", text);
 
         String result = baseModel.getWithParamtersWithoutToken(APIConfig.GET_KEYWORD, map);
         KeyWords keyWords = gson.fromJson(result, KeyWords.class);
 
-        logger.info(result);
-        logger.info(keyWords.getKeyWords().size()+"");
-
         DocumentInformation documentInformation = new DocumentInformation();
 
-        Integer theTextId = Integer.valueOf(createId());
+        Integer theTextId = Integer.valueOf(createId().substring(6));
         documentInformation.setId(theTextId);
         documentInformation.setText(text);
 
         // 将文本存入数据库
-        if(documentInformationMapper.insertSelective(documentInformation)) {
-            saveWords(keyWords, theTextId);
-        }
+        documentInformationMapper.insertSelective(documentInformation);
+        saveWords(keyWords, theTextId);
     }
 
+    /**
+     * 生成随机ID
+     * @return
+     */
     private String createId() {
         return String.valueOf(System.currentTimeMillis());
     }
 
+    /**
+     * 将词集存入及词文关系存入数据库
+     * @param keyWords
+     * @param theTextId
+     */
     private void saveWords(KeyWords keyWords, Integer theTextId) {
-        for (int temp = 0; temp < keyWords.getKeyWords().size(); temp++) {
-            for (int element = 0; element < keyWords.getKeyWords().get(0).size(); element++) {
+        CommonThesaurus commonThesaurus = new CommonThesaurus();
+        for (int element = 0; element < keyWords.getKeyWords().get(0).size(); element++) {
+            // 词语存入词表（如果已存在，不会重复存入，获得该词id）
+            Integer id = theTextId + element;
+            commonThesaurus.setId(id);
+            commonThesaurus.setCommonWords(keyWords.getKeyWords().get(0).get(element));
+            commonThesaurus.setHandleWeight(0.5);
 
+            // 判断关键词是否已在数据库中存在
+            if (null == commonThesaurusMapper.ifInTheTable(keyWords.getKeyWords().get(0).get(element))) {
+                commonThesaurusMapper.insertSelective(commonThesaurus);
+            } else {
+                id = commonThesaurusMapper.ifInTheTable(keyWords.getKeyWords().get(0).get(element));
             }
+
+            // 词存入关系表
+            WordDocumentRela wordDocumentRela = new WordDocumentRela();
+            wordDocumentRela.setId(theTextId + element);
+            wordDocumentRela.setDocumentId(theTextId);
+            wordDocumentRela.setKeywordId(id);
+            wordDocumentRela.setWeight(Double.valueOf(keyWords.getKeyWords().get(1).get(element)));
+            wordDocumentRelaMapper.insertSelective(wordDocumentRela);
         }
     }
 
