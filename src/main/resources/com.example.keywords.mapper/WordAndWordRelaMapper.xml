@@ -7,9 +7,41 @@
     <result column="extend_word_id" jdbcType="INTEGER" property="extendWordId" />
     <result column="weight" jdbcType="DOUBLE" property="weight" />
   </resultMap>
+  <resultMap id="WordsResultMap" type="com.example.keywords.model.CommonThesaurus">
+    <id column="ID" jdbcType="INTEGER" property="id" />
+    <result column="common_words" jdbcType="VARCHAR" property="commonWords" />
+    <result column="handle_weight" jdbcType="DOUBLE" property="handleWeight" />
+    <result column="is_delete" jdbcType="TINYINT" property="isDelete" />
+  </resultMap>
+  <sql id="words_Column_List">
+    ID, common_words, handle_weight, is_delete
+  </sql>
   <sql id="Base_Column_List">
     ID, base_word_id, extend_word_id, weight
   </sql>
+  <select id="relatedWords" parameterType="java.lang.Integer" resultMap="WordsResultMap">
+    SELECT
+    <include refid="words_Column_List" />
+    FROM
+	common_thesaurus
+    WHERE
+	common_thesaurus.ID IN (
+    SELECT
+	wwr.extend_word_id
+    FROM
+	( SELECT * FROM word_and_word_rela WHERE base_word_id in ( SELECT id FROM common_thesaurus
+	<where>
+      <if test="keywords != null">
+        common_thesaurus.common_words IN
+        <foreach collection="keywords" item="item" index="index"
+                 open="(" separator="," close=")">
+          #{item}
+        </foreach>
+      </if>
+    </where>)
+    ORDER BY word_and_word_rela.weight
+    LIMIT 5 ) wwr)
+  </select>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />

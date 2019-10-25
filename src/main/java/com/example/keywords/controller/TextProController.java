@@ -6,6 +6,7 @@ import com.example.keywords.model.KeyWords;
 import com.example.keywords.model.Synonyms;
 import com.example.keywords.service.CheckWordsService;
 import com.example.keywords.service.CommonThesaurusService;
+import com.example.keywords.service.serviceImpl.CheckWordsServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -30,5 +31,10 @@ public class TextProController {
     @RequestMapping("initText")
     public void initText(String text) {
         commonThesaurusService.initText(text);
+    }
+
+    @RequestMapping("divideWords")
+    public void divideWords(String text) {
+        checkWordsService.searchForInput(text, 6);
     }
 }

@@ -26,7 +26,6 @@ import java.util.logging.Logger;
 public class CommonThesaurusServiceImpl implements CommonThesaurusService {
 
     static final Gson gson = new Gson();                // Json解析包
-    Logger logger = Logger.getAnonymousLogger();        // 日志类
     static final BaseModel baseModel = new BaseModel(); // 网络请求封装
 
     @Autowired

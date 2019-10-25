@@ -1,7 +1,9 @@
 package com.example.keywords.dao;
 
+import com.example.keywords.model.CommonThesaurus;
 import com.example.keywords.model.RelatedWord;
 import com.example.keywords.model.WordAndWordRela;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
 import javax.validation.constraints.Max;
@@ -21,6 +23,5 @@ public interface WordAndWordRelaMapper {
 
     boolean updateByPrimaryKey(WordAndWordRela record);
 
-    List<RelatedWord> relatedWords(List<String> keyWord);
-
+    List<CommonThesaurus> relatedWords(@Param("keywords")List<String> keywords);
 }

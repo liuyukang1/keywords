@@ -1,22 +1,44 @@
 package com.example.keywords.model;
 
 public class RelatedWord {
-   private String word;
-    private Double Weight;
 
-    public String getWord() {
-        return word;
+    private String commonWords;
+
+    private Double handleWeight;
+
+    private Integer ID;
+
+    private Byte isDelete;
+
+    public String getCommonWords() {
+        return commonWords;
     }
 
-    public void setWord(String word) {
-        this.word = word;
+    public void setCommonWords(String commonWords) {
+        this.commonWords = commonWords;
     }
 
-    public Double getWeight() {
-        return Weight;
+    public Double getHandleWeight() {
+        return handleWeight;
     }
 
-    public void setWeight(Double weight) {
-        Weight = weight;
+    public void setHandleWeight(Double handleWeight) {
+        this.handleWeight = handleWeight;
+    }
+
+    public Integer getID() {
+        return ID;
+    }
+
+    public void setID(Integer ID) {
+        this.ID = ID;
+    }
+
+    public Byte getIsDelete() {
+        return isDelete;
+    }
+
+    public void setIsDelete(Byte isDelete) {
+        this.isDelete = isDelete;
     }
 }

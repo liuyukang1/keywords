@@ -15,9 +15,7 @@ public interface DocumentInformationMapper {
 
     boolean insertSelective(DocumentInformation record);
 
-    List<DocumentInformation> getDocumenForKeyWord(@Param("keyWord")List<String> keyWord,@Param("number") Integer number);
-
-    List<DocumentInformation> getDOcumentForRelatedWord(@Param("keyWord")List<String> keyWord,@Param("number") Integer number);
+    List<DocumentInformation> getDocumentByKeyWord(@Param("keywords")List<String> keywords);
 
     boolean updateByPrimaryKeySelective(DocumentInformation record);
 

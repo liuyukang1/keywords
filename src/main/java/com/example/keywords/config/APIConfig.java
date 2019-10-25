@@ -7,5 +7,5 @@ package com.example.keywords.config;
 public class APIConfig {
     public static final String GET_KEYWORD = "/getKeyWord";
     public static final String GET_SYNONYMS = "/getSynonyms";
-    public static final String GET_WORDS = "/getwords";
+    public static final String GET_WORDS = "/getWords";
 }

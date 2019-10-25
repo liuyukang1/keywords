@@ -79,31 +79,31 @@
     where ID = #{id,jdbcType=INTEGER}
   </update>
 
-  <select id="getDocumenForKeyWord" parameterType="java.lang.Integer" >
-    select disconnect <include refid="Base_Column_List" />,realWeight = common_thesaurus.weight *
-    word_document_rela.handle_weight
-    from document_information ,word_document_rela,common_thesaurus
-    where document_information.ID in
-    (
-    select document_id
-    from word_document_rela
-    where word_document_rela.keyword_id in
-    (
-    select ID
-    from common_thesaurus
+  <select id="getDocumentByKeyWord" parameterType="java.lang.Integer" resultMap="ResultMapWithBLOBs">
+    SELECT
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    FROM
+    document_information
+    WHERE
+    document_information.ID IN (
+    SELECT word_document_rela.document_id
+    FROM word_document_rela
+    WHERE word_document_rela.keyword_id IN (
+    SELECT common_thesaurus.ID
+    FROM common_thesaurus
     <where>
       <if test="keywords != null">
-        and common_thesaurus.common_words in
+        common_thesaurus.common_words IN
         <foreach collection="keywords" item="item" index="index"
                  open="(" separator="," close=")">
           #{item}
         </foreach>
       </if>
     </where>)
+    ORDER BY word_document_rela.weight ASC
     )
-    order by realWeight
-    limit #{number,jdbcType=INTEGER}
-
-    </select>
+  </select>
 
 </mapper>
