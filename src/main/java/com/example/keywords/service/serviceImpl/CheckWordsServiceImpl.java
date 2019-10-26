@@ -121,7 +121,7 @@ public class CheckWordsServiceImpl implements CheckWordsService {
      * @param preList
      * @return
      */
-    private List<WordWeightAndRelaWeight> dealTheResultList(List<WordWeightAndRelaWeight> preList) {
+    public List<WordWeightAndRelaWeight> dealTheResultList(List<WordWeightAndRelaWeight> preList) {
         Collections.sort(preList, new SortByCalculateWeight());
         return preList;
     }
