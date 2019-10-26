@@ -1,9 +1,5 @@
 package com.example.keywords.controller;
 
-import com.example.keywords.model.CommonThesaurus;
-import com.example.keywords.model.DocumentInformation;
-import com.example.keywords.model.KeyWords;
-import com.example.keywords.model.Synonyms;
 import com.example.keywords.service.CheckWordsService;
 import com.example.keywords.service.CommonThesaurusService;
 import com.example.keywords.util.JSONResult;
