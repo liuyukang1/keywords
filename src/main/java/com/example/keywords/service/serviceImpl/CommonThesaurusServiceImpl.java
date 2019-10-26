@@ -25,9 +25,6 @@ import java.util.logging.Logger;
 @Service
 public class CommonThesaurusServiceImpl implements CommonThesaurusService {
 
-    static final Gson gson = new Gson();                // Json解析包
-    static final BaseModel baseModel = new BaseModel(); // 网络请求封装
-
     @Autowired
     private CommonThesaurusMapper commonThesaurusMapper;
 
@@ -36,6 +33,9 @@ public class CommonThesaurusServiceImpl implements CommonThesaurusService {
 
     @Autowired
     private WordDocumentRelaMapper wordDocumentRelaMapper;
+
+    private static final Gson gson = new Gson();                // Json解析包
+    private static final BaseModel baseModel = new BaseModel(); // 网络请求封装
 
     @Override
     @Transactional
@@ -97,5 +97,4 @@ public class CommonThesaurusServiceImpl implements CommonThesaurusService {
             wordDocumentRelaMapper.insertSelective(wordDocumentRela);
         }
     }
-
 }

@@ -7,6 +7,7 @@ import com.example.keywords.dao.DocumentInformationMapper;
 import com.example.keywords.dao.WordAndWordRelaMapper;
 import com.example.keywords.model.*;
 import com.example.keywords.service.CheckWordsService;
+import com.example.keywords.util.SortByCalculateWeight;
 import com.google.gson.Gson;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -31,9 +32,9 @@ public class CheckWordsServiceImpl implements CheckWordsService {
     @Autowired
     private WordAndWordRelaMapper wordAndWordRelaMapper;
 
-    static final Gson gson = new Gson();                       // Json解析包
-    static final BaseModel baseModel = new BaseModel();        // 网络请求封装
-    static Logger logger = Logger.getAnonymousLogger();        // 日志类
+    private static final Gson gson = new Gson();                       // Json解析包
+    private static final BaseModel baseModel = new BaseModel();        // 网络请求封装
+    private static Logger logger = Logger.getAnonymousLogger();        // 日志类
 
     /**
      * 获取分词
@@ -121,6 +122,7 @@ public class CheckWordsServiceImpl implements CheckWordsService {
      * @param preList
      * @return
      */
+    @Override
     public List<WordWeightAndRelaWeight> dealTheResultList(List<WordWeightAndRelaWeight> preList) {
         Collections.sort(preList, new SortByCalculateWeight());
         return preList;
@@ -131,8 +133,7 @@ public class CheckWordsServiceImpl implements CheckWordsService {
      * @param text
      * @return
      */
-    @Override
-    public List<String> getWords(String text) {
+    private List<String> getWords(String text) {
         Map<String, String> map = new HashMap();
         map.put("text", text);
 
@@ -148,8 +149,7 @@ public class CheckWordsServiceImpl implements CheckWordsService {
      * @param wordList
      * @return
      */
-    @Override
-    public Synonyms getRemoteSynonyWords(List<String> wordList) {
+    private Synonyms getRemoteSynonyWords(List<String> wordList) {
         Map<String, String> map = new HashMap<>();
         Gson gson = new Gson();
 
@@ -175,8 +175,7 @@ public class CheckWordsServiceImpl implements CheckWordsService {
      * @param word
      * @return
      */
-    @Override
-    public CommonThesaurus checkWord(String word) {
+    private CommonThesaurus checkWord(String word) {
         return commonThesaurusMapper.selectByWord(word);
     }
 
@@ -185,8 +184,7 @@ public class CheckWordsServiceImpl implements CheckWordsService {
      * @param wordList
      * @return
      */
-    @Override
-    public List<WordWeightAndRelaWeight> getLocalSynonyWords(List<String> wordList) {
+    private List<WordWeightAndRelaWeight> getLocalSynonyWords(List<String> wordList) {
         return wordAndWordRelaMapper.relatedWords(wordList);
     }
 
@@ -195,24 +193,9 @@ public class CheckWordsServiceImpl implements CheckWordsService {
      * @param keywords
      * @return
      */
-    @Override
-    public List<DocumentInformation> getDocuments(List<String> keywords) {
+    private List<DocumentInformation> getDocuments(List<String> keywords) {
         return documentInformationMapper.getDocumentByKeyWord(keywords);
     }
-
-
 }
 
-class SortByCalculateWeight implements Comparator {
-    public int compare(Object o1, Object o2) {
-        WordWeightAndRelaWeight s1 = (WordWeightAndRelaWeight) o1;
-        WordWeightAndRelaWeight s2 = (WordWeightAndRelaWeight) o2;
-        if ((s1.getHandleWeight() * s1.getWeight()) > (s2.getHandleWeight() * s2.getWeight()))
-            return 1;
-        else if((s1.getHandleWeight() * s1.getWeight()) == (s2.getHandleWeight() * s2.getWeight()))
-            return 0;
-        else
-            return -1;
-    }
-}
 

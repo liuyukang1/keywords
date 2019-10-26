@@ -6,7 +6,7 @@ package com.example.keywords.service;
  */
 public interface CommonThesaurusService {
     /**
-     *
+     * 初始化传入文本
      * @param text
      */
     void initText(String text);
