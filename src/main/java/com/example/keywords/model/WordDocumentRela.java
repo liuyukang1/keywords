@@ -1,5 +1,8 @@
 package com.example.keywords.model;
 
+/**
+ * 文章词语关系对象
+ */
 public class WordDocumentRela {
     private Integer id;
 

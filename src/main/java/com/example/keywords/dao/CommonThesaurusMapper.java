@@ -15,6 +15,13 @@ public interface CommonThesaurusMapper {
 
     CommonThesaurus selectByPrimaryKey(Integer id);
 
+    /**
+     * 根据 词体 查询词语信息
+     * @param word
+     * @return
+     */
+    CommonThesaurus selectByWord(String word);
+
     boolean updateByPrimaryKeySelective(CommonThesaurus record);
 
     boolean updateByPrimaryKey(CommonThesaurus record);

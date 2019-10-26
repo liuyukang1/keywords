@@ -1,5 +1,8 @@
 package com.example.keywords.model;
 
+/**
+ * 本地文章对象
+ */
 public class DocumentInformation {
     private Integer id;
 

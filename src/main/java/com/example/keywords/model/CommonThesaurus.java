@@ -1,6 +1,10 @@
 package com.example.keywords.model;
 
+/**
+ * 词汇对象
+ */
 public class CommonThesaurus {
+
     private Integer id;
 
     private String commonWords;

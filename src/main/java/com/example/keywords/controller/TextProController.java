@@ -6,15 +6,11 @@ import com.example.keywords.model.KeyWords;
 import com.example.keywords.model.Synonyms;
 import com.example.keywords.service.CheckWordsService;
 import com.example.keywords.service.CommonThesaurusService;
-import com.example.keywords.service.serviceImpl.CheckWordsServiceImpl;
 import com.example.keywords.util.JSONResult;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.logging.Logger;
 
 /**
  * @author: lyk

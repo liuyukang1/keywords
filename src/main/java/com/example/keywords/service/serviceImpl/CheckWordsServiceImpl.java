@@ -2,6 +2,7 @@ package com.example.keywords.service.serviceImpl;
 
 import com.example.keywords.base.BaseModel;
 import com.example.keywords.config.APIConfig;
+import com.example.keywords.dao.CommonThesaurusMapper;
 import com.example.keywords.dao.DocumentInformationMapper;
 import com.example.keywords.dao.WordAndWordRelaMapper;
 import com.example.keywords.model.*;
@@ -10,10 +11,7 @@ import com.google.gson.Gson;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 import java.util.logging.Logger;
 
@@ -22,14 +20,16 @@ import java.util.logging.Logger;
  * @date: 10/23/2019
  */
 @Service
-
 public class CheckWordsServiceImpl implements CheckWordsService {
 
     @Autowired
-    DocumentInformationMapper documentInformationMapper;
+    private DocumentInformationMapper documentInformationMapper;
 
     @Autowired
-    WordAndWordRelaMapper wordAndWordRelaMapper;
+    private CommonThesaurusMapper commonThesaurusMapper;
+
+    @Autowired
+    private WordAndWordRelaMapper wordAndWordRelaMapper;
 
     static final Gson gson = new Gson();                       // Json解析包
     static final BaseModel baseModel = new BaseModel();        // 网络请求封装
@@ -55,10 +55,12 @@ public class CheckWordsServiceImpl implements CheckWordsService {
             return new ArrayList<>();
 
         // 远端获取词集关联词集
+        // 属性：词体 关联权重
         Synonyms synonyms = getRemoteSynonyWords(searchWords);
 
         // 本地获取词集关联词集
-        List<CommonThesaurus> relatedWords = getLocalSynonyWords(searchWords);
+        // 属性：词体 自身权重
+        List<WordWeightAndRelaWeight> relatedWords = getLocalSynonyWords(searchWords);
 
         // 判断远端获取的词语是否存在本地词库中， 如果不存在，则将其加入
         for (int ssize = 0; ssize < synonyms.getSynonymsWords().size(); ssize++) {
@@ -72,22 +74,56 @@ public class CheckWordsServiceImpl implements CheckWordsService {
                 }
                 if (flag)
                     continue;
-                CommonThesaurus commonThesaurus = new CommonThesaurus();
-                commonThesaurus.setHandleWeight(new Double(synonyms.getSynonymsWords().get(ssize).get(1).get(wsize)));
-                commonThesaurus.setCommonWords(synonyms.getSynonymsWords().get(ssize).get(0).get(wsize));
-                relatedWords.add(commonThesaurus);
+                WordWeightAndRelaWeight word = new WordWeightAndRelaWeight();
+                word.setWeight(new Double(synonyms.getSynonymsWords().get(ssize).get(1).get(wsize)));
+                word.setCommonWords(synonyms.getSynonymsWords().get(ssize).get(0).get(wsize));
+                relatedWords.add(word);
             }
         }
 
-        // 将远端本地词集全部转入查询队列
-        for (int t = 0; t < relatedWords.size(); t++) {
-            searchWords.add(relatedWords.get(t).getCommonWords());
+        // 词语筛选结果词集
+        // 属性：词体 关联权重 自身权重
+        List<WordWeightAndRelaWeight> resultList = new ArrayList<>();
+
+        // 将预查询的队列进行处理
+        // 将远端查询到的词对比本地数据库
+        // 如果存在，则将其放入词语筛选结果集
+        for (int rsize = 0; rsize < relatedWords.size(); rsize++) {
+            WordWeightAndRelaWeight relatedWord = relatedWords.get(rsize);
+            if (null != relatedWord.getHandleWeight())
+                resultList.add(relatedWord);
+            else {
+                CommonThesaurus commonThesaurus = checkWord(relatedWord.getCommonWords());
+                if (null != commonThesaurus) {
+                    relatedWord.setHandleWeight(commonThesaurus.getHandleWeight());
+                    resultList.add(relatedWord);
+                }
+            }
+        }
+
+        // 将列表进行权重计算处理
+        resultList = dealTheResultList(resultList);
+
+        // 将词集全部转入查询队列
+        for (int t = 0; t < resultList.size(); t++) {
+            searchWords.add(resultList.get(t).getCommonWords());
         }
 
         // 本地获取词集对应文本
         List<DocumentInformation> documentInformation = getDocuments(searchWords);
 
         return documentInformation;
+    }
+
+    /**
+     * 将筛选结果
+     * 进行进一步计算处理
+     * @param preList
+     * @return
+     */
+    private List<WordWeightAndRelaWeight> dealTheResultList(List<WordWeightAndRelaWeight> preList) {
+        Collections.sort(preList, new SortByCalculateWeight());
+        return preList;
     }
 
     /**
@@ -134,12 +170,23 @@ public class CheckWordsServiceImpl implements CheckWordsService {
     }
 
     /**
-     * 得到本地关联词
+     * 判断该词是否在本地存储
+     *
+     * @param word
+     * @return
+     */
+    @Override
+    public CommonThesaurus checkWord(String word) {
+        return commonThesaurusMapper.selectByWord(word);
+    }
+
+    /**
+     * 得到本地关联词集
      * @param wordList
      * @return
      */
     @Override
-    public List<CommonThesaurus> getLocalSynonyWords(List<String> wordList) {
+    public List<WordWeightAndRelaWeight> getLocalSynonyWords(List<String> wordList) {
         return wordAndWordRelaMapper.relatedWords(wordList);
     }
 
@@ -152,4 +199,20 @@ public class CheckWordsServiceImpl implements CheckWordsService {
     public List<DocumentInformation> getDocuments(List<String> keywords) {
         return documentInformationMapper.getDocumentByKeyWord(keywords);
     }
+
+
 }
+
+class SortByCalculateWeight implements Comparator {
+    public int compare(Object o1, Object o2) {
+        WordWeightAndRelaWeight s1 = (WordWeightAndRelaWeight) o1;
+        WordWeightAndRelaWeight s2 = (WordWeightAndRelaWeight) o2;
+        if ((s1.getHandleWeight() * s1.getWeight()) > (s2.getHandleWeight() * s2.getWeight()))
+            return 1;
+        else if((s1.getHandleWeight() * s1.getWeight()) == (s2.getHandleWeight() * s2.getWeight()))
+            return 0;
+        else
+            return -1;
+    }
+}
+

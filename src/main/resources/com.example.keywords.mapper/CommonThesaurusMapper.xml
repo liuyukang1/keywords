@@ -16,6 +16,12 @@
     from common_thesaurus
     where ID = #{id,jdbcType=INTEGER}
   </select>
+  <select id="selectByWord" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from common_thesaurus
+    where common_words = #{word,jdbcType=INTEGER}
+  </select>
   <select id="ifInTheTable" parameterType="java.lang.String" resultType="java.lang.Integer">
     select
     id

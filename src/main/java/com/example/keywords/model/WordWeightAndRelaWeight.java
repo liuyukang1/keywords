@@ -1,14 +1,19 @@
 package com.example.keywords.model;
 
-public class RelatedWord {
+/**
+ * 词语信息
+ * 其关联权重和权重
+ *
+ * @author: lyk
+ * @date: 10/26/2019
+ */
+public class WordWeightAndRelaWeight {
 
     private String commonWords;
 
+    private Double weight;
+
     private Double handleWeight;
-
-    private Integer ID;
-
-    private Byte isDelete;
 
     public String getCommonWords() {
         return commonWords;
@@ -26,19 +31,11 @@ public class RelatedWord {
         this.handleWeight = handleWeight;
     }
 
-    public Integer getID() {
-        return ID;
+    public Double getWeight() {
+        return weight;
     }
 
-    public void setID(Integer ID) {
-        this.ID = ID;
-    }
-
-    public Byte getIsDelete() {
-        return isDelete;
-    }
-
-    public void setIsDelete(Byte isDelete) {
-        this.isDelete = isDelete;
+    public void setWeight(Double weight) {
+        this.weight = weight;
     }
 }
