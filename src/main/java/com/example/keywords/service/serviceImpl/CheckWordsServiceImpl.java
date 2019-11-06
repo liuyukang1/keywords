@@ -144,6 +144,9 @@ public class CheckWordsServiceImpl implements CheckWordsService {
         return resultWords;
     }
 
+
+
+    
     /**
      * 得到远端关联词
      * @param wordList
