@@ -5,6 +5,7 @@ import com.google.gson.Gson;
 import okhttp3.*;
 
 import java.io.IOException;
+import java.util.Iterator;
 import java.util.Map;
 import java.util.logging.Logger;
 
@@ -55,6 +56,10 @@ public class BaseModel {
     public String postWithoutToken(String url, Map<String, String> bodyParams) {
         // 构造RequestBody
         RequestBody body = setRequestBody(bodyParams);
+//        RequestBody body = new FormBody.Builder()
+//                .add("text", "好孩子，陈德强是大家的儿子")
+//                .add("text","陈德强是儿子")
+//                .build();
 
         Request.Builder requestBuilder = new Request.Builder();
         Request request = requestBuilder
@@ -84,10 +89,18 @@ public class BaseModel {
      * @return
      */
     private RequestBody setRequestBody(Map<String, String> bodyParams) {
-        MediaType json  = MediaType.parse("application/json; charset=utf-8");
-        Gson gson = new Gson();
-        RequestBody body = RequestBody.create(json,gson.toJson(bodyParams));
+//        MediaType json  = MediaType.parse("application/x-www-form-urlencoded; charset=utf-8");
+        MediaType mediaType = MediaType.get("application/x-www-form-urlencoded");
+        FormBody.Builder builder = new  FormBody.Builder();
+        Iterator en = bodyParams.entrySet().iterator();
+        while (en.hasNext()){
+            Map.Entry<String,String> entry = (Map.Entry<String,String>)en.next();
 
-        return body;
+            builder.add(entry.getKey(),entry.getValue());
+        }
+
+
+
+        return builder.build();
     }
 }

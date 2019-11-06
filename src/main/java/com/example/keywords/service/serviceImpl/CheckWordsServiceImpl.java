@@ -137,7 +137,7 @@ public class CheckWordsServiceImpl implements CheckWordsService {
         Map<String, String> map = new HashMap();
         map.put("text", text);
 
-        String wordsStr = baseModel.getWithParamtersWithoutToken(APIConfig.GET_WORDS, map);
+        String wordsStr = baseModel.postWithoutToken(APIConfig.GET_WORDS, map);
         HashMap<String, List<String>> result = gson.fromJson(wordsStr, HashMap.class);
 
         List<String> resultWords = result.get("words");
